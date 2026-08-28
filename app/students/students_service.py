@@ -3,8 +3,8 @@ from uuid import uuid4
 
 from fastapi import HTTPException, status
 
-from icinf1108.app.shared.in_memory_store import InMemoryStore
-from icinf1108.app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
+from app.shared.in_memory_store import InMemoryStore
+from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
 
 
 class StudentsService:
