@@ -10,14 +10,24 @@ from app.shared.schemas import ApiResponse
 router = APIRouter(prefix="/api/students", tags=["Students"])
 
 @router.get("")
-def find_all() -> list[Student]:
-    return students_service.find_all()
-
+def find_all() -> ApiResponse[list[Student]]:
+    data = students_service.find_all()
+    return ApiResponse(
+        success=True,
+        status_code=status.HTTP_200_OK,
+        message="Estudiantes obtenidos correctamente",
+        data=data
+    )
 
 @router.get("/{student_id}")
-def find_by_id(student_id: str) -> Student:
-    return students_service.find_by_id(student_id)
-
+def find_by_id(student_id: str) -> ApiResponse[Student]:
+    data = students_service.find_by_id(student_id)
+    return ApiResponse(
+        success=True,
+        status_code=status.HTTP_200_OK,
+        message="Estudiante encontrado",
+        data=data
+    )
 
 @router.post("", status_code=201)
 def create(body: CreateStudentDto) -> Student:
