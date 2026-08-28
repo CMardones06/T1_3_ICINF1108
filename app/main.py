@@ -51,54 +51,5 @@ def create_app() -> FastAPI:
             ).model_dump()
         )
 
-    # @app.exception_handler(RequestValidationError)
-    # async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    #     return JSONResponse(
-    #         status_code=422,
-    #         content=ApiResponse(
-    #             success=False,
-    #             status_code=422,
-    #             message="Error de validación en los datos enviados",
-    #             data=exc.errors()
-    #         ).model_dump()
-    #     )
-
-    # @app.exception_handler(StarletteHTTPException)
-    # async def http_exception_handler(request: Request, exc: StarletteHTTPException):
-    #     api_response = ApiResponse(
-    #         success=False,
-    #         status_code=exc.status_code,
-    #         message=str(exc.detail),
-    #         data=None
-    #     )
-    #     return JSONResponse(
-    #         status_code=exc.status_code,
-    #         content=api_response.model_dump()
-    #     )
-
-    # @app.exception_handler(RequestValidationError)
-    # async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    #     api_response = ApiResponse(
-    #         success=False,
-    #         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    #         message="Error de validación en los datos enviados",
-    #         data=exc.errors()
-    #     )
-    #     return JSONResponse(
-    #         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    #         content=api_response.model_dump()
-    #     )
-
-    # @app.exception_handler(Exception)
-    # async def global_exception_handler(request: Request, exc: Exception):
-    #         return JSONResponse(
-    #             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #             content=ApiResponse(
-    #                 success=False,
-    #                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #                 message="Error interno del servidor",
-    #                 data=str(exc)
-    #             ).model_dump()
-    #         )
     return app
 app = create_app()
