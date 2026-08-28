@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from icinf1108.app.pets.pets_service import pets_service
-from icinf1108.app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
-from icinf1108.app.students.students_service import students_service
+from app.pets.pets_service import pets_service
+from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
+from app.students.students_service import students_service
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 
@@ -17,9 +17,15 @@ def find_by_id(student_id: str) -> Student:
     return students_service.find_by_id(student_id)
 
 
-@router.post("", status_code=201)
-def create(body: CreateStudentDto) -> Student:
-    return students_service.create(body)
+@router.post("", status_code=201, response_model=ApiResponse[Student])
+def create(body: CreateStudentDto) -> ApiResponse[Student]:
+    new_student = students_service.create(body)
+    return ApiResponse(
+        success=True,
+        status_code=201,
+        message=f"Estudiante '{new_student.name}' creado exitosamente",
+        data=new_student,
+    )
 
 
 @router.patch("/{student_id}")
