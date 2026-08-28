@@ -4,7 +4,7 @@ from fastapi import status
 from app.pets.pets_service import pets_service
 from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
 from app.students.students_service import students_service
-#Clase estandarizada
+
 from app.shared.schemas import ApiResponse
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
@@ -35,8 +35,14 @@ def create(body: CreateStudentDto) -> Student:
 
 
 @router.patch("/{student_id}")
-def update(student_id: str, body: UpdateStudentDto) -> Student:
-    return students_service.update(student_id, body)
+def update(student_id: str, body: UpdateStudentDto) -> ApiResponse[Student]:
+    data=students_service.update(student_id, body)
+    return ApiResponse(
+        success=True,
+        status_code=status.HTTP_200_OK,
+        message="Estudiante fue actualizado correctamente",
+        data=data
+    )
 
 
 @router.delete("/{student_id}")
