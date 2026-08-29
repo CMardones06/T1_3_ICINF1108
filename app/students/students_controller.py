@@ -29,9 +29,15 @@ def find_by_id(student_id: str) -> ApiResponse[Student]:
         data=data
     )
 
-@router.post("", status_code=201)
-def create(body: CreateStudentDto) -> Student:
-    return students_service.create(body)
+@router.post("", status_code=201, response_model=ApiResponse[Student])
+def create(body: CreateStudentDto) -> ApiResponse[Student]:
+    new_student = students_service.create(body)
+    return ApiResponse(
+        success=True,
+        status_code=201,
+        message=f"Estudiante '{new_student.name}' creado exitosamente",
+        data=new_student,
+    )
 
 
 @router.patch("/{student_id}")
