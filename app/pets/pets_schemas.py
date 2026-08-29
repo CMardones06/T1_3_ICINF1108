@@ -6,7 +6,7 @@ NO_HTML_PATTERN = r"^[^<>]*$"
 
 
 class Pet(BaseModel):
-    id: str
+    id: int #str
     studentId: str
     name: str
     species: str

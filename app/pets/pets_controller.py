@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from icinf1108.app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
-from icinf1108.app.pets.pets_service import pets_service
+from app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
+from app.pets.pets_service import pets_service
 
 router = APIRouter(
     prefix="/api/students/{studentId}/pets",
@@ -14,10 +14,16 @@ def find_all(studentId: str) -> list[Pet]:
     return pets_service.find_all_for_student(studentId)
 
 
-@router.post("", status_code=201)
-def create(studentId: str, body: CreatePetDto) -> Pet:
-    return pets_service.create(studentId, body)
-
+@router.post("", status_code=201, response_model=ApiResponse[Pet])
+def create(studentId: str, body: CreatePetDto) -> ApiResponse[Pet]:
+    new_pet = pets_service.create(studentId, body)
+    
+    return ApiResponse(
+        success=True,
+        status_code=201,
+        message=f"Mascota '{new_pet.name}' registrada exitosamente",
+        data=new_pet,
+    )
 
 @router.patch("/{petId}")
 def update(studentId: str, petId: str, body: UpdatePetDto) -> Pet:
