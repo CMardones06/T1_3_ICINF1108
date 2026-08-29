@@ -57,20 +57,20 @@ class StudentsService:
         self.store.set(updated)
         return updated
 
-    def delete(self, student_id: str) -> Student:
-        existing = self.find_by_id(student_id)
-        self.store.delete(student_id)
+# Modificiación de funciones delete y assert_email_available
+# Primero se define un endpoint en la ruta de student_id
+@router.delete("/{student_id}") 
+def delete(student_id: str) -> ApiResponse[Student]: # recibe como parametro student_id y se indica que se va a retornar un objeto ApiResponse  
+    deleted = students_service.delete(student_id)    # servicio busca y elimina
+    pets_service.delete_all_for_student(student_id)  # usa mismo id de estudiante para buscar mascotas vinculadas y eliminarlas
 
-        return existing
-
-    def assert_email_available(self, email: str) -> None:
-        exists = any(student.email == email for student in self.store.find_all())
-
-        if exists:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="El correo electrónico ya está en uso",
-            )
+# Usamos estandarizadamente ApiResponse() para cada respuesta
+# cada vez con exactamente cuatro atributos
+    return ApiResponse(
+        success     = True,
+        status_code = status.HTTP_200_OK, # Todo ok
+        message     = "Estudiante y mascopas vinculadas fueron eliminados correctamente",
+        data        = deleted             # estudiante eliminado
+    )
 
 
-students_service = StudentsService()
