@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from icinf1108.app.pets.pets_controller import router as pets_router
-from icinf1108.app.students.students_controller import router as students_router
+from app.pets.pets_controller import router as pets_router
+from app.students.students_controller import router as students_router
 
 
 def create_app() -> FastAPI:

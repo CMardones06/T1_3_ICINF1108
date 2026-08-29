@@ -3,9 +3,9 @@ from uuid import uuid4
 
 from fastapi import HTTPException, status
 
-from icinf1108.app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
-from icinf1108.app.shared.in_memory_store import InMemoryStore
-from icinf1108.app.students.students_service import StudentsService, students_service
+from app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
+from app.shared.in_memory_store import InMemoryStore
+from app.students.students_service import StudentsService, students_service
 
 
 class PetsService:
