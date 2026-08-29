@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from icinf1108.app.pets.pets_service import pets_service
-from icinf1108.app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
-from icinf1108.app.students.students_service import students_service
+from app.pets.pets_service import pets_service
+from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
+from app.students.students_service import students_service
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
 
@@ -27,9 +27,19 @@ def update(student_id: str, body: UpdateStudentDto) -> Student:
     return students_service.update(student_id, body)
 
 
-@router.delete("/{student_id}")
-def delete(student_id: str) -> Student:
-    deleted = students_service.delete(student_id)
-    pets_service.delete_all_for_student(student_id)
+# Modificiación de funciones delete y assert_email_available
+# Primero se define un endpoint en la ruta de student_id
+@router.delete("/{student_id}") 
+def delete(student_id: str) -> ApiResponse[Student]: # recibe como parametro student_id y se indica que se va a retornar un objeto ApiResponse  
+    deleted = students_service.delete(student_id)    # servicio busca y elimina
+    pets_service.delete_all_for_student(student_id)  # usa mismo id de estudiante para buscar mascotas vinculadas y eliminarlas
 
-    return deleted
+# Usamos estandarizadamente ApiResponse() para cada respuesta
+# cada vez con exactamente cuatro atributos
+    return ApiResponse(
+        success     = True,
+        status_code = status.HTTP_200_OK, # Todo ok
+        message     = "Estudiante y mascopas vinculadas fueron eliminados correctamente",
+        data        = deleted             # estudiante eliminado
+    )
+
