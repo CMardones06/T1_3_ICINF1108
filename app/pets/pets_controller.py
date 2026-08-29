@@ -18,7 +18,6 @@ def find_all(studentId: str) -> list[Pet]:
 def create(studentId: str, body: CreatePetDto) -> Pet:
     return pets_service.create(studentId, body)
 
-
 @router.patch("/{petId}")
 def update(studentId: str, petId: str, body: UpdatePetDto) -> Pet:
     return pets_service.update(studentId, petId, body)
