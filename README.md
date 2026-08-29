@@ -29,6 +29,23 @@ Cada mascota tiene `id` (UUID), `studentId`, `name`, `species`, `age` (opcional)
 
 Las respuestas devuelven los datos crudos, sin envoltorios. Los errores de validación usan el formato nativo de FastAPI (`422`) y las excepciones HTTP los códigos estándar (`404`, `409`).
 
+## Actualización:
+
+Todas las respuestas de la API (tanto éxitos como errores) están estandarizadas bajo un contrato único y no devuelven los datos crudos.
+
+
+## Estándar de Respuestas JSON
+
+Para facilitar el consumo de la API, se implementó un estándar único (`ApiResponse`) para todas las respuestas HTTP, ya sean exitosas o errores.
+
+El estándar consta de 4 campos fijos:
+
+- `success` (boolean): Indica si la operación se realizó correctamente (`true`) o si hubo un error (`false`).
+- `status_code` (int): Refleja el código de estado HTTP de la respuesta (ej. 200, 201, 404, 422).
+- `message` (string): Mensaje descriptivo sobre el resultado de la operación o el detalle del error.
+- `data` (any | nulo): Contiene el payload (los datos solicitados, un objeto creado, una lista, o los detalles de un error de validación). Si no hay datos, retorna `null`.
+
+
 ## Contexto técnico
 
 - **Backend**: FastAPI

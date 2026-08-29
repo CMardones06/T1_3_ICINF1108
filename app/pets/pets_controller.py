@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from icinf1108.app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
-from icinf1108.app.pets.pets_service import pets_service
+from app.pets.pets_schemas import CreatePetDto, Pet, UpdatePetDto
+from app.pets.pets_service import pets_service
 
 router = APIRouter(
     prefix="/api/students/{studentId}/pets",
