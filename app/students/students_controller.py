@@ -1,11 +1,13 @@
 from fastapi import APIRouter
+from fastapi import status
 
-from icinf1108.app.pets.pets_service import pets_service
-from icinf1108.app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
-from icinf1108.app.students.students_service import students_service
+from app.pets.pets_service import pets_service
+from app.students.students_schemas import CreateStudentDto, Student, UpdateStudentDto
+from app.students.students_service import students_service
+#Clase estandarizada
+from app.shared.schemas import ApiResponse
 
 router = APIRouter(prefix="/api/students", tags=["Students"])
-
 
 @router.get("")
 def find_all() -> list[Student]:
